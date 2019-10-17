@@ -1,0 +1,38 @@
+######################
+설치
+######################
+
+SDK 다운로드
+=====================
+
+1. `TOAST Downloads <http://docs.toast.com/ko/Download/#game-smart-downloader>`_ 접속
+
+2. **Game > Smart Downloader** 항목으로 이동
+
+3. **Unity SDK** 링크를 선택하여 다운로드
+
+샘플 코드 다운로드
+=====================
+
+``다운로드 경로 확정 시 작성필요``
+
+Unity 프로젝트 설정
+=====================
+
+1. Unity 프로젝트를 엽니다.
+
+2. Unity에서 Assets > Import Package > Custom Package를 선택합니다.
+
+3. 다운로드한 SDK 및 샘플 코드를 선택한 후 ``Import`` 합니다.
+   
+    .. image:: _static/image/sdk_import.png
+
+
+샘플 씬 열기
+=====================
+
+* 경로 : Assets/SmartDL-HandsOnLab/Scenes/ExampleSmartDl.scene
+
+* 이번 핸즈온랩에서 구현되는 모든 내용은 샘플 씬에서 진행됩니다.
+
+    .. image:: _static/image/sdk_sample_download_ui_intro.png

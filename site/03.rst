@@ -1,0 +1,98 @@
+######################
+초기 설정
+######################
+
+제공된 샘플 파일인 SmartDlExample.cs를 이용하여 진행합니다.
+
+DownloadConfig
+=====================
+
+별도의 설정 변경 없이 진행하며 미리 클래스 내에 `Default <http://docs.toast.com/ko/Game/Smart%20Downloader/ko/sdk-guide/#_3>`_\ 로 정의합니다.
+
+.. code-block:: C#
+
+    public static class SmartDlExample
+    {
+        private readonly static DownloadConfig downloadConfig = DownloadConfig.Default;
+    }    
+
+
+Log 설정
+=====================
+
+SDK 내부 로그를 출력하기 위해 로그 레벨과 출력 방식을 구현합니다.
+
+.. code-block:: C#
+
+   public static void Initialize()
+   {
+       SmartDlLogger.CurrentLevel = SmartDlLogger.LogLevel.Debug;
+       SmartDlLogger.OnLog += (type, log) =>
+       {
+           switch (type)
+           {
+               case SmartDlLogger.LogLevel.Trace:
+               case SmartDlLogger.LogLevel.Developer:
+               case SmartDlLogger.LogLevel.Debug:
+               case SmartDlLogger.LogLevel.Info:
+                   {
+                       Debug.Log(log);
+                       break;
+                   }
+               case SmartDlLogger.LogLevel.Warn:
+                   {
+                       Debug.LogWarning(log);
+                       break;
+                   }
+               case SmartDlLogger.LogLevel.Error:
+                   {
+                       Debug.LogError(log);
+                       break;
+                   }
+               default:
+                   {
+                       Debug.Log(log);
+                       break;
+                   }
+           }
+       }
+   }
+
+ 
+다운로드를 위한 값 설정
+=======================
+
+다운로드를 위해서는 다음과 같은 값이 필요합니다.
+
+* Appkey
+* Service Name
+* Download local path
+
+.. code-block:: C#
+
+   private const string SMART_DL_APPKEY = "Smart Downloader Appkey";
+   private const string SMART_DL_SERVICE_NAME = "Smart Downloader Service Name";
+
+   private static string DownloadPath
+   {
+       get
+       {
+           return
+   #if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
+               Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + Seperator + LeafDirectory;
+   #elif UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX
+               Environment.GetFolderPath(Environment.SpecialFolder.Personal) + Seperator + "Documents" + Seperator + LeafDirectory;
+   #else
+               Application.persistentDataPath + Seperator + LeafDirectory;
+   #endif
+       }
+   }
+
+
+Appkey 확인
+----------------
+
+1. TOAST Console에서 Smart Downloader 프로젝트를 선택합니다.
+2. 우측 상단에 **URL & Appkey**\ 를 선택 후 Appkey 확인 팝업이 출력됩니다. 
+
+    .. image:: _static/image/console_appkey.png

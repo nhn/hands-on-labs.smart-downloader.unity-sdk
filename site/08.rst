@@ -1,0 +1,33 @@
+######################
+다운로드 모니터링
+######################
+
+서비스 페이지
+=====================
+   
+1. `TOAST Console <https://console.toast.com>`_ 접속
+2. **Game > Smart Downloader** 서비스 페이지 이동
+
+
+실시간 모니터링
+=====================
+   
+1. Smart Downloader 서비스 페이지에서 **실시간 모니터링 탭**\ 을 선택합니다.
+
+2. 페이지가 열리면 **실시간 일별 다운로드 현황**\ 과 **실시간 국가별 다운로드 현황** 지표를 확인합니다.
+
+    .. image:: _static/image/console_monitering_realtime.png
+
+
+모니터링 지표
+=====================
+
+1. Smart Downloader 서비스 페이지에서 **모니터링 지표**\ 을 선택합니다.
+
+2. 조회 기간 및 조건 설정 후 **검색**\ 을 진행합니다.
+
+    .. image:: _static/image/console_monitering_indicator_search.png
+
+3. **일별 다운로드 현황**\ 과 **국가별 다운로드 현황** 지표를 확인합니다.
+
+    .. image:: _static/image/console_monitering_indicator_result.png

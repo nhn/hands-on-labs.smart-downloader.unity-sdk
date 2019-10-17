@@ -1,0 +1,27 @@
+****
+개요
+****
+
+유니티 프로젝트에서 Smart Downloader SDK 이용해 업로드된 리소스를 다운로드 받는 방법을 구현해봅니다.
+
+
+학습할 내용
+============
+
+* Unity SDK를 붙여 리소스 다운로드 하기
+
+
+준비물
+===========
+
+* `TOAST 계정 <https://toast.com/>`_
+
+* Unity 5.6.6 이상
+
+* Code Editor (Visual Studio, Visual Studio Code, Rider 등)
+
+
+이전 단계
+============
+
+* Smart Downloader 서비스 생성하기
