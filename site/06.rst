@@ -7,6 +7,8 @@ SmartDownloader API 적용
 
 .. code-block:: C#
 
+    // Assets/TOAST/HandsOnLab/SmartDL/Scripts/SmartDownloader.cs
+
    public static ProgressInfo DownloadProgress
    {
        get
@@ -19,31 +21,36 @@ SmartDownloader API 적용
 UI 구현
 =====================
 
-UI에 표시하기 위해 SmartDlExampleView.cs 파일에서 구현합니다.
+UI에 표시하기 위해 DownloadView.cs 파일에서 구현합니다.
 
 .. code-block:: C#
 
+    // Assets/TOAST/HandsOnLab/SmartDL/Scripts/DownloadView.cs
+    
     void Update()
     {
-        var progress = SmartDlExample.DownloadProgress;
-       
-        totalDownloadProgress.Percentage = progress.Percentage;
+        var progress = SmartDownloader.DownloadProgress;
+        if (progress == null)
+        {
+            return;
+        }
+
+        totalProgress.Percentage = progress.Percentage;
 
         if (progress.TotalFileBytes == 0)
         {
-            totalDownloadStatusText.text =
-                LocalizationManager.Instance.GetLocalizedValue("Checking for resources.");
+            messageText.text = RESOURCE_DOWNLOAD_WAIT;
         }
         else
         {
             uint completedCount = progress.CompletedFileCount;
             uint totalCount = progress.TotalFileNumber;
 
-            totalDownloadStatusText.text = string.Format("{0}/{1} ({2}/{3})",
-                StringUtil.BytesToString(
-                    progress.TotalReceivedBytes),
-                    StringUtil.BytesToString(progress.TotalFileBytes),
+            totalStatusText.text = string.Format("{0}/{1} ({2}/{3})",
+                StringUtil.BytesToString(progress.TotalReceivedBytes),
+                StringUtil.BytesToString(progress.TotalFileBytes),
                 completedCount, totalCount);
+            messageText.text = string.Empty;
 
             if (progress.FileMap != null)
             {
@@ -54,13 +61,13 @@ UI에 표시하기 위해 SmartDlExampleView.cs 파일에서 구현합니다.
                     ExpandBackground(true);
                 }
 
-                downloadResourceView.ThreadCount = threadCount;
+                resourceProgressGroup.ThreadCount = threadCount;
                 for (int i = 0; i < threadCount; i++)
                 {
                     var file = progress.FileMap[i];
-                    float filePercentage = (file.DownloadedBytes / (float)file.TotalBytes) * 100.0f;
-                    downloadResourceView[i].FileName = file.FileName;
-                    downloadResourceView[i].ProgressStatus(filePercentage);
+                    resourceProgressGroup[i].FileName = file.FileName;
+                    resourceProgressGroup[i].ProgressStatus(
+                        Mathf.Min(100f, (file.DownloadedBytes / (float)file.TotalBytes) * 100.0f));
                 }
             }
         }
@@ -72,7 +79,7 @@ UI에 표시하기 위해 SmartDlExampleView.cs 파일에서 구현합니다.
 
 1. 샘플 씬에서 플레이 버튼을 눌러 게임을 실행합니다.
 
-2. 화면에서 **Download** 버튼을 누릅니다.
+2. 화면에서 **DOWNLOAD** 버튼을 누릅니다.
 
     .. image:: _static/image/sdk_sample_download_ui_intro.png
 
@@ -83,3 +90,9 @@ UI에 표시하기 위해 SmartDlExampleView.cs 파일에서 구현합니다.
 4. 다운로드가 완료되면 결과 팝업이 출력됩니다.
 
     .. image:: _static/image/sdk_sample_download_ui_result.png
+
+5. 결과 팝업을 닫고 **OPEN PATH** 버튼을 누르면 다운로드 경로로 이동하며 다운로드된 파일을 확인합니다.
+
+    .. image:: _static/image/sdk_download_path.png
+
+6. 다음 진행을 위해 **DELETE CACHE** 버튼을 눌러 다운로드된 파일을 삭제합니다.

@@ -2,16 +2,18 @@
 초기 설정
 ######################
 
-제공된 샘플 파일인 SmartDlExample.cs를 이용하여 진행합니다.
+제공된 샘플 파일인 SmartDownloader.cs를 이용하여 진행합니다.
 
 DownloadConfig
 =====================
 
-별도의 설정 변경 없이 진행하며 미리 클래스 내에 `Default <http://docs.toast.com/ko/Game/Smart%20Downloader/ko/sdk-guide/#_3>`_\ 로 정의합니다.
+별도의 설정 변경 없이 진행하며 미리 클래스 내에 `Default <http://docs.toast.com/ko/Game/Smart%20Downloader/ko/sdk-guide/#_3>`_\ 로 선언되어 있습니다.
 
 .. code-block:: C#
 
-    public static class SmartDlExample
+    // Assets/TOAST/HandsOnLab/SmartDL/Scripts/SmartDownloader.cs
+
+    public static class SmartDownloader
     {
         private readonly static DownloadConfig downloadConfig = DownloadConfig.Default;
     }    
@@ -24,12 +26,14 @@ SDK 내부 로그를 출력하기 위해 로그 레벨과 출력 방식을 구�
 
 .. code-block:: C#
 
+    // Assets/TOAST/HandsOnLab/SmartDL/Scripts/SmartDownloader.cs
+
    public static void Initialize()
    {
        SmartDlLogger.CurrentLevel = SmartDlLogger.LogLevel.Debug;
-       SmartDlLogger.OnLog += (type, log) =>
+       SmartDlLogger.OnLog += (level, log) =>
        {
-           switch (type)
+           switch (level)
            {
                case SmartDlLogger.LogLevel.Trace:
                case SmartDlLogger.LogLevel.Developer:
@@ -55,7 +59,7 @@ SDK 내부 로그를 출력하기 위해 로그 레벨과 출력 방식을 구�
                        break;
                    }
            }
-       }
+       };
    }
 
  
@@ -70,23 +74,27 @@ SDK 내부 로그를 출력하기 위해 로그 레벨과 출력 방식을 구�
 
 .. code-block:: C#
 
-   private const string SMART_DL_APPKEY = "Smart Downloader Appkey";
-   private const string SMART_DL_SERVICE_NAME = "Smart Downloader Service Name";
+    // Assets/TOAST/HandsOnLab/SmartDL/Scripts/SmartDownloader.cs
 
-   private static string DownloadPath
-   {
-       get
-       {
-           return
-   #if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
-               Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + Seperator + LeafDirectory;
-   #elif UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX
-               Environment.GetFolderPath(Environment.SpecialFolder.Personal) + Seperator + "Documents" + Seperator + LeafDirectory;
-   #else
-               Application.persistentDataPath + Seperator + LeafDirectory;
-   #endif
-       }
-   }
+    private const string SMART_DL_APPKEY = "Smart Downloader Appkey";
+    private const string SMART_DL_SERVICE_NAME = "Smart Downloader Service Name";
+
+    private static string DownloadPath
+    {
+        get
+        {
+            return
+    #if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)
+    #elif UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX
+                Environment.GetFolderPath(Environment.SpecialFolder.Personal) + Path.DirectorySeparatorChar + "Documents"
+    #else
+                Application.persistentDataPath
+    #endif
+                + Path.DirectorySeparatorChar
+                + "SmartDlDownloads";
+        }
+    }
 
 
 Appkey 확인

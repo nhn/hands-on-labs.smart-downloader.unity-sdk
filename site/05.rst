@@ -9,7 +9,9 @@ SmartDownloader API 적용
 
 .. code-block:: C#
 
-   public static void StartDownload(params string[] paths)
+    // Assets/TOAST/HandsOnLab/SmartDL/Scripts/SmartDownloader.cs
+
+   public static void StartDownload(Action<DownloadResult> callback, params string[] paths)
    {
        downloadConfig.ClearSpecifyPath();
 
@@ -21,21 +23,40 @@ SmartDownloader API 적용
            }
        }
        
-       ...
+       // 4. 전체 다운로드에서 구현했던 내용 유지
    }
 
 
 UI 구현
 =====================
 
-UI에 표시하기 위해 SmartDlExampleView.cs 파일에서 구현합니다.
+1. 부분 다운로드를 위해서는 업로드된 리소스의 폴더 구조를 확인합니다.
 
-.. code-block:: C#
+    .. image:: _static/image/console_service_resources_viewer.png
 
-    public void ClickDownloadButton()
-    {
-        SmartDlExample.StartDownload(@"/characters");
-    }
+2. 다운로드 받을 파일을 선택합니다.
+
+    * /Sample/stage 폴더 내 리소스 전부
+    * /Sample/Sample.manifest
+
+3. UI에 표시하기 위해 MainView.cs 파일에서 구현합니다.
+
+    .. code-block:: C#
+
+        // Assets/TOAST/HandsOnLab/SmartDL/Scripts/MainView.cs
+        
+        public void OnStartDownload()
+        {
+            HandsOnLabView.Instance.StartDownloaded();
+            SmartDownloader.StartDownload(
+                result =>
+                {
+                    string resultMessage = result.ToString();
+                    HandsOnLabView.Instance.FinishDownload(resultMessage);
+                },
+                @"/Sample/stage",
+                @"/Sample/Sample.manifest");
+        }
 
 
 실행 결과
@@ -43,10 +64,16 @@ UI에 표시하기 위해 SmartDlExampleView.cs 파일에서 구현합니다.
 
 1. 샘플 씬에서 플레이 버튼을 눌러 게임을 실행합니다.
 
-2. 화면에서 **Download** 버튼을 누릅니다.
+2. 화면에서 **DOWNLOAD** 버튼을 누릅니다.
 
     .. image:: _static/image/sdk_sample_download_ui_intro.png
 
 3. 다운로드가 완료되면 결과 팝업이 출력됩니다.
 
     .. image:: _static/image/sdk_sample_download_ui_result.png
+
+4. 결과 팝업을 닫고 **OPEN PATH** 버튼을 누르면 다운로드 경로로 이동하며 다운로드된 파일을 확인합니다.
+
+    .. image:: _static/image/sdk_download_path.png
+
+5. 다음 진행을 위해 **DELETE CACHE** 버튼을 눌러 다운로드된 파일을 삭제합니다.
