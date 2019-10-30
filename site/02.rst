@@ -31,7 +31,7 @@ Unity 프로젝트 설정
 샘플 씬 열기
 =====================
 
-* 경로 : Assets/TOAST/HandsOnLab/SmartDL/Scenes/SmartDlHandsOnLab.scene
+* 경로 : Assets/TOAST/HandsOnLab/SmartDL/SmartDlHandsOnLab.scene
 
 * 이번 핸즈온랩에서 구현되는 모든 내용은 샘플 씬에서 진행됩니다.
 

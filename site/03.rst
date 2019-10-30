@@ -97,10 +97,17 @@ SDK 내부 로그를 출력하기 위해 로그 레벨과 출력 방식을 구�
     }
 
 
-Appkey 확인
+Appkey
 ----------------
 
 1. TOAST Console에서 Smart Downloader 프로젝트를 선택합니다.
 2. 우측 상단에 **URL & Appkey**\ 를 선택 후 Appkey 확인 팝업이 출력됩니다. 
 
     .. image:: _static/image/console_appkey.png
+
+Server Name
+----------------
+
+1. TOAST Console에서 Smart Downloader 프로젝트를 선택합니다.
+2. **서비스 관리 > 서비스 목록**\ 에서 사용자가 생성한 서비스의 이름을 확인합니다.
+
