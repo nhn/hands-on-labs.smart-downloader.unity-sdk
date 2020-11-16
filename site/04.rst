@@ -9,17 +9,27 @@ SmartDownloader API 적용
 
     // Assets/TOAST/HandsOnLab/SmartDL/Scripts/SmartDownloader.cs
 
+    public static void CheckDownload(Action<DownloadResult callback, params string[] paths)
+    {
+        SmartDl.CheckDownload(
+            SMART_DL_APPKEY,
+            SMART_DL_SERVICE_NAME,
+            DownloadPath,
+            downloadConfig,
+            result => {
+                callback(result);
+            }
+        );
+    }
+    
+
+.. code-block:: C#
+
+    // Assets/TOAST/HandsOnLab/SmartDL/Scripts/SmartDownloader.cs
+
     public static void StartDownload(Action<DownloadResult> callback)
     {
-        SmartDl.StartDownload(
-            SMART_DL_APPKEY, 
-            SMART_DL_SERVICE_NAME, 
-            DownloadPath, 
-            downloadConfig, 
-            result =>
-            {
-                callback(result);
-            });
+        SmartDl.StartDownload(result => callback(result));
     }
 
 
@@ -35,13 +45,33 @@ UI에 표시하기 위해 MainView.cs 파일에서 구현합니다.
     public void OnStartDownload()
     {
         HandsOnLabView.Instance.StartDownloaded();
-        SmartDownloader.StartDownload(
+
+        // - 다운로드 성공 시 다운로드 정보 팝업 출력 (HandsOnLabView.Instance.ConfirmView())
+        // - 다운로드 정보 출력 (GetDownloadInfoString())
+        // - 다운로드 결과 출력 (FinishDownload())
+
+        // 다운로드 파일 검사
+        SmartDownloader.CheckDownload(
             result =>
             {
-                string resultMessage = result.ToString();
-                HandsOnLabView.Instance.FinishDownload(resultMessage);
+                if (result.Code == ResultCode.SUCCESS)
+                {
+                    // 다운로드 크기 및 리소스 개수 정보 출력
+                    HandsOnLabView.Instance.ConfirmView(
+                        GetDownloadInfoString(SmartDl.Progress.TotalFileBytes, SmartDl.Progress.TotalFileCount),
+                        () =>
+                        {
+                            SmartDownloader.StartDownload(FinishDownload);
+                        });
+                }
+                else
+                {
+                    // 결과 UI 출력
+                    FinishDownload(result);
+                }
             });
     }
+    
 
 
 실행 결과
@@ -53,12 +83,16 @@ UI에 표시하기 위해 MainView.cs 파일에서 구현합니다.
 
     .. image:: _static/image/sdk_sample_download_ui_intro.png
 
-3. 다운로드가 완료되면 결과 팝업이 출력됩니다.
+3. 다운로드 받을 용량 및 리소스의 개수 확인 후 **OK** 버튼을 누릅니다.
 
-    .. image:: _static/image/sdk_sample_download_ui_result.png
+    .. image:: _static/image/sdk_sample_download_ui_check_result.png
 
-4. 결과 팝업을 닫고 **OPEN PATH** 버튼을 누르면 다운로드 경로로 이동하며 다운로드된 파일을 확인합니다.
+4. 정보창에 **OK** 버튼을 누르면 다운로드가 진행되고 완료되면 결과 팝업이 출력됩니다.
+
+    .. image:: _static/image/sdk_sample_download_ui_download_result.png
+
+5. 결과 팝업을 닫고 **OPEN PATH** 버튼을 누르면 다운로드 경로로 이동하며 다운로드된 파일을 확인합니다.
 
     .. image:: _static/image/sdk_download_path.png
 
-5. 다음 진행을 위해 **DELETE CACHE** 버튼을 눌러 다운로드된 파일을 삭제합니다.
+6. 다음 진행을 위해 **DELETE CACHE** 버튼을 눌러 다운로드된 파일을 삭제합니다.

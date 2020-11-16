@@ -39,10 +39,14 @@ UI에 표시하기 위해 MainView.cs 파일에서 구현합니다.
 
     .. image:: _static/image/sdk_sample_download_ui_intro.png
 
-3. 다운로드가 진행되면 하단에 **CANCEL** 버튼을 눌러 다운로드를 취소합니다.
+3. 다운로드 받을 용량 및 리소스의 개수 확인 후 **OK** 버튼을 누릅니다.
+
+    .. image:: _static/image/sdk_sample_download_ui_check_result.png
+
+4. 다운로드가 진행되면 하단에 **CANCEL** 버튼을 눌러 다운로드를 취소합니다.
 
     .. image:: _static/image/sdk_sample_download_ui_progress.png
 
-4. 다운로드가 취소되면 결과 팝업이 출력됩니다.
+5. 다운로드가 취소되면 결과 팝업이 출력됩니다.
 
     .. image:: _static/image/sdk_sample_download_ui_result_cancel.png

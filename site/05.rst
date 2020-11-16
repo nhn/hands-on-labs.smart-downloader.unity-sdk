@@ -48,14 +48,29 @@ UI 구현
         public void OnStartDownload()
         {
             HandsOnLabView.Instance.StartDownloaded();
-            SmartDownloader.StartDownload(
+
+            // 다운로드 파일 검사
+            SmartDownloader.CheckDownload(
                 result =>
                 {
-                    string resultMessage = result.ToString();
-                    HandsOnLabView.Instance.FinishDownload(resultMessage);
-                },
-                @"/Sample/stage",
-                @"/Sample/Sample.manifest");
+                    if (result.Code == ResultCode.SUCCESS)
+                    {
+                        // 다운로드 크기 및 리소스 개수 정보 출력
+                        HandsOnLabView.Instance.ConfirmView(
+                            GetDownloadInfoString(SmartDl.Progress.TotalFileBytes, SmartDl.Progress.TotalFileCount),
+                            () =>
+                            {
+                                SmartDownloader.StartDownload(FinishDownload);
+                            });
+                    }
+                    else
+                    {
+                        // 결과 UI 출력
+                        FinishDownload(result);
+                    }
+                }
+                , @"/Sample/stage"
+                , @"/Sample/Sample.manifest");
         }
 
 
@@ -68,12 +83,16 @@ UI 구현
 
     .. image:: _static/image/sdk_sample_download_ui_intro.png
 
-3. 다운로드가 완료되면 결과 팝업이 출력됩니다.
+3. 다운로드 받을 용량 및 리소스의 개수 확인 후 **OK** 버튼을 누릅니다.
 
-    .. image:: _static/image/sdk_sample_download_ui_result.png
+    .. image:: _static/image/sdk_sample_download_ui_check_result.png
 
-4. 결과 팝업을 닫고 **OPEN PATH** 버튼을 누르면 다운로드 경로로 이동하며 다운로드된 파일을 확인합니다.
+4. 정보창에 **OK** 버튼을 누르면 다운로드가 진행되고 완료되면 결과 팝업이 출력됩니다.
+
+    .. image:: _static/image/sdk_sample_download_ui_download_result.png
+
+5. 결과 팝업을 닫고 **OPEN PATH** 버튼을 누르면 다운로드 경로로 이동하며 다운로드된 파일을 확인합니다.
 
     .. image:: _static/image/sdk_download_path.png
 
-5. 다음 진행을 위해 **DELETE CACHE** 버튼을 눌러 다운로드된 파일을 삭제합니다.
+6. 다음 진행을 위해 **DELETE CACHE** 버튼을 눌러 다운로드된 파일을 삭제합니다.

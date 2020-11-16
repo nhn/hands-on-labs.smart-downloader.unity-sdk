@@ -9,56 +9,99 @@ SmartDownloader API 적용
 
     // Assets/TOAST/HandsOnLab/SmartDL/Scripts/SmartDownloader.cs
 
-   public static ProgressInfo DownloadProgress
-   {
-       get
-       {
-           return SmartDl.Progress;
-       }
-   }
+    public static ProgressInfo DownloadProgress
+    {
+        get
+        {
+            return SmartDl.Progress;
+        }
+    }
 
 
-UI 구현
+UI 구현 - ProgressBar에 다운로드 % 출력
 =====================
 
 UI에 표시하기 위해 DownloadView.cs 파일에서 구현합니다.
+
+.. image:: _static/image/sdk_sample_download_ui_progress_part1.png
 
 .. code-block:: C#
 
     // Assets/TOAST/HandsOnLab/SmartDL/Scripts/DownloadView.cs
     
-    void Update()
+    private void Update()
     {
         var progress = SmartDownloader.DownloadProgress;
         if (progress == null)
         {
             return;
         }
-
+        
+        // 진행 상태 표시 1 - Percentage
         totalProgress.Percentage = progress.Percentage;
+        
+        ...
+    }
+
+
+UI 구현 - 다운로드 정보 텍스트 출력
+=====================
+
+.. image:: _static/image/sdk_sample_download_ui_progress_part1.png
+
+.. code-block:: C#
+
+    // Assets/TOAST/HandsOnLab/SmartDL/Scripts/DownloadView.cs
+    
+    private void Update()
+    {
+        ...
 
         if (progress.TotalFileBytes == 0)
         {
-            messageText.text = RESOURCE_DOWNLOAD_WAIT;
+            messageText.text = "Checking for resources.";
         }
         else
         {
-            uint completedCount = progress.CompletedFileCount;
-            uint totalCount = progress.TotalFileNumber;
-
-            totalStatusText.text = string.Format("{0}/{1} ({2}/{3})",
-                StringUtil.BytesToString(progress.TotalReceivedBytes),
-                StringUtil.BytesToString(progress.TotalFileBytes),
-                completedCount, totalCount);
             messageText.text = string.Empty;
+            
+            // 진행 상태 표시 2 - 다운로드 크기 및 리소스 개수 표시
+            totalStatusText.text = GetDownloadInfoString(
+                progress.DownloadedBytes, progress.TotalFileBytes, 
+                progress.CompletedFileCount, progress.TotalFileCount);
+        }
+    }
 
+
+UI 구현 - 다운로드 중인 파일 정보 출력
+=====================
+
+.. image:: _static/image/sdk_sample_download_ui_progress_part2.png
+
+.. code-block:: C#
+
+    // Assets/TOAST/HandsOnLab/SmartDL/Scripts/DownloadView.cs
+    
+    private void Update()
+    {
+        ...
+
+        if (progress.TotalFileBytes == 0)
+        {
+            ...
+        }
+        else
+        {
+            // 진행 상태 표시 2 - 다운로드 크기 및 리소스 개수 표시
+            ...
+            
+            // 진행상태 표시 3 - 다운로드 중인 리소스 별 진행상태 표시 표시
             if (progress.FileMap != null)
             {
                 var threadCount = progress.FileMap.Count;
-
                 if (threadCount > 0)
-                {
-                    ExpandBackground(true);
+                {   
+                    ExpandBackground(true);     // 다운로드 UI 배경 영역 확장
                 }
 
                 resourceProgressGroup.ThreadCount = threadCount;
@@ -83,16 +126,20 @@ UI에 표시하기 위해 DownloadView.cs 파일에서 구현합니다.
 
     .. image:: _static/image/sdk_sample_download_ui_intro.png
 
-3. 다운로드 진행 과정이 화면에 표현됩니다.
+3. 다운로드 받을 용량 및 리소스의 개수 확인 후 **OK** 버튼을 누릅니다.
+
+    .. image:: _static/image/sdk_sample_download_ui_check_result.png
+
+4. 다운로드 진행 과정이 화면에 표현됩니다.
  
     .. image:: _static/image/sdk_sample_download_ui_progress.png
 
-4. 다운로드가 완료되면 결과 팝업이 출력됩니다.
+5. 다운로드가 완료되면 결과 팝업이 출력됩니다.
 
-    .. image:: _static/image/sdk_sample_download_ui_result.png
+    .. image:: _static/image/sdk_sample_download_ui_download_result.png
 
-5. 결과 팝업을 닫고 **OPEN PATH** 버튼을 누르면 다운로드 경로로 이동하며 다운로드된 파일을 확인합니다.
+6. 결과 팝업을 닫고 **OPEN PATH** 버튼을 누르면 다운로드 경로로 이동하며 다운로드된 파일을 확인합니다.
 
     .. image:: _static/image/sdk_download_path.png
 
-6. 다음 진행을 위해 **DELETE CACHE** 버튼을 눌러 다운로드된 파일을 삭제합니다.
+7. 다음 진행을 위해 **DELETE CACHE** 버튼을 눌러 다운로드된 파일을 삭제합니다.
