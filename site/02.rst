@@ -14,7 +14,7 @@ SDK 다운로드
 샘플 코드 다운로드
 =====================
 
-`SmartDownloader-HandsOnLab.unitypackage 다운로드 <http://static.toastoven.net/toastcloud/sdk_download/Smart%20Downloader/HandsOnLab/SmartDownloader-HandsOnLab.unitypackage>`_
+`SmartDownloader-HandsOnLab.unitypackage 다운로드 <http://static.toastoven.net/toastcloud/sdk_download/Smart%20Downloader/HandsOnLab/SmartDownloader-HandsOnLab-2020.unitypackage>`_
 
 Unity 프로젝트 설정
 =====================
