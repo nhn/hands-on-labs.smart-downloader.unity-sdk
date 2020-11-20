@@ -47,7 +47,7 @@ UI에 표시하기 위해 DownloadView.cs 파일에서 구현합니다.
 UI 구현 - 다운로드 정보 텍스트 출력
 =====================
 
-.. image:: _static/image/sdk_sample_download_ui_progress_part1.png
+.. image:: _static/image/sdk_sample_download_ui_progress_part2.png
 
 .. code-block:: C#
 
@@ -76,7 +76,7 @@ UI 구현 - 다운로드 정보 텍스트 출력
 UI 구현 - 다운로드 중인 파일 정보 출력
 =====================
 
-.. image:: _static/image/sdk_sample_download_ui_progress_part2.png
+.. image:: _static/image/sdk_sample_download_ui_progress_part3.png
 
 .. code-block:: C#
 

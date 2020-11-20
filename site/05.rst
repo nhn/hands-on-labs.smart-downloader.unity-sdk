@@ -85,7 +85,7 @@ UI 구현
 
 3. 다운로드 받을 용량 및 리소스의 개수 확인 후 **OK** 버튼을 누릅니다.
 
-    .. image:: _static/image/sdk_sample_download_ui_check_result.png
+    .. image:: _static/image/sdk_sample_download_ui_check_result2.png
 
 4. 정보창에 **OK** 버튼을 누르면 다운로드가 진행되고 완료되면 결과 팝업이 출력됩니다.
 
