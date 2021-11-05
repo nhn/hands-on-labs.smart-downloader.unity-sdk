@@ -2,22 +2,6 @@
 다운로드 상태 표시
 ######################
 
-SmartDownloader API 적용
-=========================
-
-.. code-block:: C#
-
-    // Assets/TOAST/HandsOnLab/SmartDL/Scripts/SmartDownloader.cs
-
-    public static ProgressInfo DownloadProgress
-    {
-        get
-        {
-            return SmartDl.Progress;
-        }
-    }
-
-
 UI 구현 - ProgressBar에 다운로드 % 출력
 =====================
 

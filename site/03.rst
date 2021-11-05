@@ -97,6 +97,21 @@ SDK 내부 로그를 출력하기 위해 로그 레벨과 출력 방식을 구�
     }
 
 
+다운로드 진행 상태 정보
+=========================
+
+.. code-block:: C#
+
+    // Assets/TOAST/HandsOnLab/SmartDL/Scripts/SmartDownloader.cs
+
+    public static ProgressInfo DownloadProgress
+    {
+        get
+        {
+            return SmartDl.Progress;
+        }
+    }
+
 Appkey
 ----------------
 
